@@ -1,0 +1,77 @@
+<div class="nk-sidebar nk-sidebar-fixed is-dark" data-content="prasmanan">
+  <div class="nk-sidebar-element nk-sidebar-head">
+    <div class="nk-menu-trigger">
+      <a href="javascript:void(0)" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="prasmanan">
+        <em class="icon ni ni-arrow-left"></em>
+      </a>
+      <a href="javascript:void(0)" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="prasmanan">
+        <em class="icon ni ni-menu"></em>
+      </a>
+    </div>
+
+    <div class="nk-sidebar-brand">
+      <a href="{{ base_url(route('studio.overview')) }}" class="logo-link nk-sidebar-logo" up-target="[layout-main]">
+        <img class="logo-light logo-img" src="{{ logo('light') }}" alt="{{ settings.app.name }}">
+        <img class="logo-dark logo-img" src="{{ logo('dark') }}" alt="{{ settings.app.name }}">
+      </a>
+    </div>
+  </div>
+
+  <div class="nk-sidebar-element nk-sidebar-body">
+    <div class="nk-sidebar-content">
+      <div class="nk-sidebar-menu" data-simplebar>
+        <ul class="nk-menu">
+          @each (key in Object.keys(sidebars))
+          @set('sidebar', sidebars[key])
+          @if ('icon' in sidebar && 'route' in sidebar)
+          @if ('childrens' in sidebar)
+          @can('permission', sidebar.permissions || [])
+          <li class="nk-menu-item has-sub">
+            <a href="javascript:void(0)" class="nk-menu-link nk-menu-toggle">
+              <span class="nk-menu-icon">
+                <em class="icon ni ni-{{ sidebar.icon }}"></em>
+              </span>
+              <span class="nk-menu-text">{{ sidebar.title }}</span>
+            </a>
+
+            <ul class="nk-menu-sub">
+              @each (children in Object.values(sidebar.childrens))
+              @can('permission', children.permissions || (sidebar.permissions || []))
+              <li class="nk-menu-item">
+                <a {{{ children.external ? 'target="_blank"' : '' }}} href="{{ sidebarRoute(children.route) }}" class="nk-menu-link" {{{ children.external ? '' : 'up-target="[layout-main]"' }}}>
+                  <span class="nk-menu-text">{{ children.title }}</span>
+                </a>
+              </li>
+              @end
+              @end
+            </ul>
+          </li>
+          @end
+          @else
+          @can('permission', sidebar.permissions || [])
+          <li class="nk-menu-item">
+            <a {{{ sidebar.external ? 'target="_blank"' : '' }}} href="{{ sidebarRoute(sidebar.route) }}" class="nk-menu-link" {{{ sidebar.external ? '' : 'up-target="[layout-main]"' }}}>
+              <span class="nk-menu-icon">
+                <em class="icon ni ni-{{ sidebar.icon || 'alert-circle' }}"></em>
+              </span>
+              <span class="nk-menu-text">{{ sidebar.title }}</span>
+              @if (badges && (badges[key] || false))
+              <span class="nk-menu-badge">{{ badges[key] }}</span>
+              @end
+            </a>
+          </li>
+          @end
+          @end
+          @else
+          @can('permission', sidebar.permissions || [])
+          <li class="nk-menu-heading">
+            <h6 class="overline-title text-primary-alt">{{ sidebar.title }}</h6>
+          </li>
+          @end
+          @end
+          @end
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

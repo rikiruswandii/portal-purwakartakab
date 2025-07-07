@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id" class="js">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  @include('studio/_partials/meta')
+  <title>{{ parseTitle(page) }}</title>
+
+  @include('studio/_partials/styles')
+  @!section('stylesheet')
+  @entryPointStyles('app')
+
+  <script id="constants" type="application/json">
+    {{{ constants }}}
+  </script>
+</head>
+
+<body class="nk-body bg-lighter npc-general has-sidebar no-touch nk-nio-theme" layout-root>
+  @include('studio/_partials/preloader')
+
+  <div class="nk-app-root">
+    <div class="nk-main">
+      @include('studio/_partials/sidebar')
+
+      <div class="nk-wrap">
+        @include('studio/_partials/header')
+
+        <div class="nk-content">
+          <div class="container-fluid">
+            <div class="nk-content-inner">
+              <div class="nk-content-body" layout-main>
+                @include('studio/_partials/alert/toastr')
+                @!section('content')
+                @!section('modal')
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @include('studio/_partials/footer')
+      </div>
+    </div>
+  </div>
+
+  @include('studio/_partials/scripts')
+  @!section('javascript')
+  @entryPointScripts('app')
+</body>
+
+</html>

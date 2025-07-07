@@ -1,0 +1,21 @@
+{
+  "entrypoints": {
+    "unpoly": {
+      "js": [
+        "/assets/578.c074842e215e145511bf.js",
+        "/assets/unpoly.fa64c2562e8d0178bb2a.js"
+      ],
+      "css": [
+        "/assets/unpoly.37e54ba8545178e1f4d4.css"
+      ]
+    },
+    "app": {
+      "css": [
+        "/assets/app.9e49aa6e72fa8fccfec8.css"
+      ],
+      "js": [
+        "/assets/app.f6d943fdcbc367f7a890.js"
+      ]
+    }
+  }
+}

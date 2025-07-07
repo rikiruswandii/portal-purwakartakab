@@ -1,0 +1,9 @@
+<div class="form-group">
+  <div class="form-label-group">
+    <label class="form-label" for="{{ name }}">{{{ label }}}</label>
+  </div>
+
+  <div class="form-control-wrap">
+    <input type="{{ type || 'text' }}" class="form-control form-control-lg" id="{{ name }}" name="{{ name }}" placeholder="{{ placeholder }}" {{{ autofocus ? 'autofocus=""' : '' }}} required="">
+  </div>
+</div>

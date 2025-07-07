@@ -1,0 +1,85 @@
+@layout('studio/_layouts/master')
+
+@section('navigation')
+@!component('studio/_components/tools/add-direct', {
+link: route('studio.csp.all'),
+icon: 'done',
+label: 'Solve All',
+})
+@end
+
+@section('content')
+<div class="nk-block" id="csp-area" up-data='{{{ JSON.stringify({ chart }) }}}'>
+  <div class="row g-gs">
+    <div class="col-12">
+      <div class="card card-bordered card-preview">
+        <div class="card-inner">
+          <div class="nk-ck-md">
+            <canvas height="360px" id="csp-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card card-bordered card-stretch">
+        <div class="card-inner-group">
+          <div class="card-inner p-0">
+            <div class="nk-tb-list nk-tb-tnx">
+              <div class="nk-tb-item nk-tb-head">
+                <div class="nk-tb-col"><span>Directive</span></div>
+                @if (!!data.length)
+                <div class="nk-tb-col text-end"><span>Browser</span></div>
+                @end
+                <div class="nk-tb-col nk-tb-col-tools"></div>
+              </div>
+
+              @if (!!data.length)
+              @each (csp in data)
+              @set('csp', csp.shift())
+              <div class="nk-tb-item">
+                <div class="nk-tb-col">
+                  <div class="nk-tnx-type">
+                    <div class="nk-tnx-type-text">
+                      <span class="tb-lead">{{csp.violatedDirective}}</span>
+                      <span class="tb-url">{{csp.blockedUri}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="nk-tb-col text-end">
+                  <span class="tb-amount">{{csp.browser}}</span>
+                </div>
+                <div class="nk-tb-col nk-tb-col-tools">
+                  <ul class="nk-tb-actions gx-2">
+                    <li>
+                      <a href="{{route('studio.csp.solve', { uuid: csp.uuid })}}" class="bg-white btn btn-sm btn-outline-light btn-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Solve">
+                        <em class="icon ni ni-done"></em>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              @end
+              @else
+              <div class="nk-tb-item">
+                <div class="nk-tb-col">
+                  Tidak ada data
+                </div>
+                <div class="nk-tb-col nk-tb-col-tools">
+                </div>
+              </div>
+              @end
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end
+
+@section('javascript')
+<script nonce="{{ cspNonce || '' }}">
+  Object.assign(window.constants, {{{ JSON.stringify({ chart }) }}})
+</script>
+@end

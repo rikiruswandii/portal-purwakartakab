@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>{{ subject }}</title>
+
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+    body {
+      max-width: 650px;
+      font-family: "DM Sans", sans-serif;
+      display: block;
+      background: #f5f6fa;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+      color: #8094ae;
+      width: 100%;
+      margin: 30px auto;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    table>tbody>tr>td>table:first-child {
+      background-color: #f6f7fb;
+    }
+
+    table>tbody>tr>td>table:nth-child(2) {
+      background-color: #fff;
+    }
+
+    .email-container {
+      max-width: 650px;
+      margin: 0 auto
+    }
+
+    img {
+      height: 48px;
+      width: auto;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    span {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 13px;
+      line-height: 1.7;
+      letter-spacing: 0.7px;
+      margin-top: 0;
+    }
+
+    p.email-tagline {
+      margin-bottom: 30px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #6576ff;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    h6 {
+      margin: 0 0 18px 0;
+      font-size: 18px;
+      color: #6576ff;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .email-button {
+      background: #6576ff;
+      border-radius: 4px;
+      color: #ffffff !important;
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 44px;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 0 30px;
+    }
+
+    .email-body td {
+      padding: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <table class="email-container">
+                    <tbody>
+                      <tr class="text-center">
+                        <td>
+                          <img src="{{ logo('dark') }}" alt="{{ settings.app.name }}">
+                          <p class="email-tagline">{{ settings.app.tagline }}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="email-container email-body">
+            <tbody>
+              <tr>
+                <td>
+                  <h6>Atur Ulang Kata Sandi</h6>
+                  <p style="margin-bottom: 0">
+                    Halo {{ name || 'Pengguna' }},
+                    <br />
+                    Sepertinya kamu lupa dengan kata sandi {{ settings.app.name }}, jika itu benar,
+                    silahkan klik tombol di bawah ini untuk mengatur ulang.
+                  </p>
+
+                  <p style="margin: 20px 0">
+                    <a href="{{ base_url(url) }}" class="email-button">Atur Ulang</a>
+                  </p>
+
+                  <p>Tautan di atas hanya berlaku satu jam setelah surel ini diterima.</p>
+
+                  <p>
+                    Jika kamu mengingat kata sandinya, silahkan abaikan surel ini.
+                    <br />
+                    Semoga ini bekerja!
+                  </p>
+
+                  <p style="margin-bottom: 0">
+                    Salam,
+                    <br />
+                    <strong>{{ settings.app.name }}</strong>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="email-container" style="margin-top: 30px">
+            <tbody>
+              <tr style="text-align: center">
+                <td>
+                  <p style="color: #999; margin-bottom: 0">
+                    {{ settings.contact.address }}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

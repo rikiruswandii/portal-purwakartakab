@@ -1,0 +1,68 @@
+@layout('studio/_layouts/master')
+
+@set('dtColumns', {
+  columns: [
+    {
+      data: 'number',
+      orderable: false,
+      searchable: false,
+      rowClass: 'nk-tb-col',
+      rowTemplate: '<span>${window.data.number}</span>',
+    },
+    {
+      data: 'title',
+      rowClass: 'text-wrap',
+      rowTemplate: '<span class="tb-lead text-wrap"><a href="${window.data.url}" target="_blank">${window.data.title}</a></span>',
+    },
+    {
+      data: 'government',
+      rowClass: 'tb-col-lg text-wrap',
+    },
+    {
+      data: 'active',
+      rowClass: 'text-wrap text-center',
+      rowTemplate: '<span>${window.data.active ? `<em class="h6 ni ni-check-fill-c text-success"></em>` : `<em class="h6 ni ni-cross-fill-c text-danger"></em>`}</span>',
+    },
+  ]
+})
+
+@section('navigation')
+@!component('studio/_components/tools/add-direct', {
+link: base_url(route('studio.announcements.add')),
+})
+@end
+
+@section('content')
+<div class="nk-block">
+  <div class="card card-bordered card-stretch">
+    <div class="card-inner">
+      <table class="datatable-init nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false" data-ajax="{{ base_url(route('studio.announcements.datatable')) }}" up-data='{{{ JSON.stringify(dtColumns) }}}'>
+        <thead>
+          <tr class="nk-tb-item nk-tb-head">
+            <th class="nk-tb-col" data-column="number">
+              <span class="sub-text">#</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="title">
+              <span class="sub-text">Judul</span>
+            </th>
+            <th class="nk-tb-col text-wrap tb-col-lg" data-column="government">
+              <span class="sub-text">OPD</span>
+            </th>
+            <th class="nk-tb-col text-wrap narrow" data-column="active">
+              <span class="sub-text">Aktif</span>
+            </th>
+            <th class="nk-tb-col nk-tb-col-tools text-end" data-column="action" data-features="edit-direct,delete"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@end
+
+@section('javascript')
+<script nonce="{{ cspNonce || '' }}" defer="">
+  Object.assign(window.constants, {{{ JSON.stringify(dtColumns) }}})
+</script>
+@end

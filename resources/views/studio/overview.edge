@@ -1,0 +1,451 @@
+@layout('studio/_layouts/master')
+
+@section('content')
+<div class="nk-block" id="overview-page" up-data='{{{ JSON.stringify(json) }}}'>
+  <div class="row g-gs">
+    <div class="col-6 col-lg-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Berita</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{news.total}}</span>
+              <span class="sub-title">
+                <span class="change down text-danger me-0">{{news.inactive}}</span>
+                tidak dipublikasikan
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-warning-soft text-warning">
+                <em class="icon ni ni-rss"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Artikel</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{articles.total}}</span>
+              <span class="sub-title">
+                <span class="change down text-danger me-0">{{articles.inactive}}</span>
+                tidak dipublikasikan
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-info-soft text-info">
+                <em class="icon ni ni-article"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if ([UserRole.DEV, UserRole.SUPER].includes(auth.user.role))
+    <div class="col-6 col-lg-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Infografis</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{infographics.total}}</span>
+              <span class="sub-title">
+                <span class="change down text-danger me-0">{{infographics.inactive}}</span>
+                tidak dipublikasikan
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-danger-soft text-danger">
+                <em class="icon ni ni-img"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    @end
+
+    <div class="col-6 col-lg-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Pengumuman</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{announcements.total}}</span>
+              <span class="sub-title">
+                <span class="change down text-danger me-0">{{announcements.inactive}}</span>
+                tidak dipublikasikan
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-success-soft text-success">
+                <em class="icon ni ni-folder"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if (UserRole.OPD === auth.user.role)
+    <div class="col-6 col-lg-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Layanan</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{services.mine}}</span>
+              <span class="sub-title">
+                Dari semua
+                (<span class="change down text-danger me-0">{{services.total}}</span>)
+                layanan
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-danger-soft text-danger">
+                <em class="icon ni ni-share-alt"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    @end
+
+    <div class="col-xxl-6">
+      <div class="card card-bordered h-100">
+        <div class="card-inner-group" id="popular-news">
+          <div class="card-inner">
+            <div class="card-title-group">
+              <div class="card-title card-title-sm">
+                <h6 class="title">Berita Terpopuler</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner-group" id="popular-articles">
+          <div class="card-inner">
+            <div class="card-title-group">
+              <div class="card-title card-title-sm">
+                <h6 class="title">Artikel Terpopuler</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group">
+            <div class="card-title card-title-sm">
+              <h6 class="title">Negara Pengunjung</h6>
+              <p>Negara-negara pengunjung.</p>
+            </div>
+
+            <div class="card-tools">
+              @!component('studio/_components/timespan', { interval })
+            </div>
+          </div>
+
+          <div class="analytics-map">
+            <div class="vector-map" id="visitors-world-map"></div>
+
+            <table class="analytics-map-data-list">
+              @each (country in countries.slice(0, 4))
+              <tr class="analytics-map-data">
+                <td class="country">{{country.name}}</td>
+                <td class="amount">{{country.total}}</td>
+                <td class="percent">{{country.percentage}}%</td>
+              </tr>
+              @end
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-6">
+      <div class="card card-bordered h-100">
+        <div class="card-inner mb-n2">
+          <div class="card-title-group">
+            <div class="card-title card-title-sm">
+              <h6 class="title">Peramban Pengunjung</h6>
+              <p>Peramban yang digunakan pengunjung.</p>
+            </div>
+
+            <div class="card-tools">
+              @!component('studio/_components/timespan', { interval })
+            </div>
+          </div>
+        </div>
+
+        <div class="nk-tb-list is-loose">
+          <div class="nk-tb-item nk-tb-head">
+            <div class="nk-tb-col"><span>Peramban</span></div>
+            <div class="nk-tb-col text-end"><span>Pengunjung</span></div>
+            <div class="nk-tb-col"><span>% Pengunjung</span></div>
+          </div>
+
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <div class="icon-text">
+                <em class="text-primary icon ni ni-globe"></em>
+                <span class="tb-lead">Google Chrome</span>
+              </div>
+            </div>
+
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub"><span>{{browsers.Chrome.total}}</span></span>
+            </div>
+
+            <div class="nk-tb-col">
+              <div class="progress progress-md progress-alt bg-transparent">
+                <div class="progress-bar" data-progress="{{browsers.Chrome.percentage}}"></div>
+                <div class="progress-amount">{{browsers.Chrome.percentage}}%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <div class="icon-text">
+                <em class="text-danger icon ni ni-globe"></em>
+                <span class="tb-lead">Mozilla Firefox</span>
+              </div>
+            </div>
+
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub"><span>{{browsers.Firefox.total}}</span></span>
+            </div>
+
+            <div class="nk-tb-col">
+              <div class="progress progress-md progress-alt bg-transparent">
+                <div class="progress-bar" data-progress="{{browsers.Firefox.percentage}}"></div>
+                <div class="progress-amount">{{browsers.Firefox.percentage}}%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <div class="icon-text">
+                <em class="text-info icon ni ni-globe"></em>
+                <span class="tb-lead">Safari Browser</span>
+              </div>
+            </div>
+
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub"><span>{{browsers.Safari.total}}</span></span>
+            </div>
+
+            <div class="nk-tb-col">
+              <div class="progress progress-md progress-alt bg-transparent">
+                <div class="progress-bar" data-progress="{{browsers.Safari.percentage}}"></div>
+                <div class="progress-amount">{{browsers.Safari.percentage}}%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <div class="icon-text">
+                <em class="text-orange icon ni ni-globe"></em>
+                <span class="tb-lead">UC Browser</span>
+              </div>
+            </div>
+
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub"><span>{{browsers.UCBrowser.total}}</span></span>
+            </div>
+
+            <div class="nk-tb-col">
+              <div class="progress progress-md progress-alt bg-transparent">
+                <div class="progress-bar" data-progress="{{browsers.UCBrowser.percentage}}"></div>
+                <div class="progress-amount">{{browsers.UCBrowser.percentage}}%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <div class="icon-text">
+                <em class="text-blue icon ni ni-globe"></em>
+                <span class="tb-lead">Edge / IE</span>
+              </div>
+            </div>
+
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub"><span>{{browsers.Edge.total}}</span></span>
+            </div>
+
+            <div class="nk-tb-col">
+              <div class="progress progress-md progress-alt bg-transparent">
+                <div class="progress-bar" data-progress="{{browsers.Edge.percentage}}"></div>
+                <div class="progress-amount">{{browsers.Edge.percentage}}%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <div class="icon-text">
+                <em class="text-purple icon ni ni-globe"></em>
+                <span class="tb-lead">Other Browser</span>
+              </div>
+            </div>
+
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub"><span>{{browsers.Other.total}}</span></span>
+            </div>
+
+            <div class="nk-tb-col">
+              <div class="progress progress-md progress-alt bg-transparent">
+                <div class="progress-bar" data-progress="{{browsers.Other.percentage}}"></div>
+                <div class="progress-amount">{{browsers.Other.percentage}}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner mb-n2">
+          <div class="card-title-group">
+            <div class="card-title card-title-sm">
+              <h6 class="title">Halaman Dilihat</h6>
+              <p>Halaman yang sering dilihat.</p>
+            </div>
+
+            <div class="card-tools">
+              @!component('studio/_components/timespan', { interval })
+            </div>
+          </div>
+        </div>
+
+        <div class="nk-tb-list is-compact is-page-views">
+          <div class="nk-tb-item nk-tb-head">
+            <div class="nk-tb-col"><span>Halaman</span></div>
+            <div class="nk-tb-col text-end"><span>Dilihat</span></div>
+          </div>
+          @each (visitor in views)
+          <div class="nk-tb-item">
+            <div class="nk-tb-col">
+              <span class="tb-sub"><span>{{visitor.page}}</span></span>
+            </div>
+            <div class="nk-tb-col text-end">
+              <span class="tb-sub tb-amount"><span>{{visitor.total}}</span></span>
+            </div>
+          </div>
+          @end
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xxl-3">
+      <div class="card card-bordered h-100">
+        <div class="card-inner h-100 stretch flex-column">
+          <div class="card-title-group">
+            <div class="card-title card-title-sm">
+              <h6 class="title">Tipe Perangkat</h6>
+              <p>Persentase perangkat pengunjung.</p>
+            </div>
+
+            <div class="card-tools">
+              @!component('studio/_components/timespan', { interval })
+            </div>
+          </div>
+
+          <div class="device-status my-auto">
+            <div class="device-status-ck">
+              <canvas id="device-type-chart"></canvas>
+            </div>
+
+            <div class="device-status-group">
+              <div class="device-status-data">
+                <em data-color="#798bff" class="icon ni ni-monitor"></em>
+                <div class="title">Desktop</div>
+                <div class="amount">{{devices.desktop.percentage}}%</div>
+                <div class="change {{devices.desktop.class}} text-danger">
+                  <em class="icon ni ni-arrow-long-{{devices.desktop.class}}"></em>
+                  {{devices.desktop.change}}%
+                </div>
+              </div>
+
+              <div class="device-status-data">
+                <em data-color="#baaeff" class="icon ni ni-mobile"></em>
+                <div class="title">Mobile</div>
+                <div class="amount">{{devices.mobile.percentage}}%</div>
+                <div class="change {{devices.mobile.class}} text-danger">
+                  <em class="icon ni ni-arrow-long-{{devices.mobile.class}}"></em>
+                  {{devices.mobile.change}}%
+                </div>
+              </div>
+
+              <div class="device-status-data">
+                <em data-color="#7de1f8" class="icon ni ni-tablet"></em>
+                <div class="title">Tablet</div>
+                <div class="amount">{{devices.tablet.percentage}}%</div>
+                <div class="change {{devices.tablet.class}} text-danger">
+                  <em class="icon ni ni-arrow-long-{{devices.tablet.class}}"></em>
+                  {{devices.tablet.change}}%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end
+
+@section('javascript')
+<script nonce="{{ cspNonce || '' }}">
+  Object.assign(window.constants, {{{ JSON.stringify(json) }}})
+</script>
+@end

@@ -1,0 +1,110 @@
+@layout('studio/_layouts/master')
+
+@section('navigation')
+<a href="javascript:void(0)" class="btn btn-primary d-inline-flex" data-post-target="form[method=POST]">
+  <em class="icon ni ni-check"></em>
+  <span>Simpan</span>
+</a>
+@end
+
+@section('content')
+<form action="{{ current_url() }}" enctype="multipart/form-data" method="POST" class="nk-block row gy-3 form-validate" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  <div class="col-md-8">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        @!component('studio/_components/input', {
+        name: 'name',
+        label: 'Nama OPD',
+        required: true,
+        })
+
+        @!component('studio/_components/input', {
+        name: 'alias',
+        label: 'Alias/Singkatan',
+        required: true,
+        })
+
+        <div class="form-group">
+          <label for="address" class="form-label">
+            Alamat
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <textarea name="address" id="address" class="form-control" spellcheck="false" style="min-height: 60px;" required=""></textarea>
+          </div>
+        </div>
+
+        @!component('studio/_components/input', {
+        name: 'email',
+        type: 'email',
+        label: 'Alamat Surel',
+        required: false,
+        placeholder: 'example@mail.com',
+        })
+
+        @!component('studio/_components/input', {
+        name: 'phone',
+        type: 'tel',
+        label: 'Nomor Telepon',
+        required: false,
+        placeholder: '(021) xxxxxxx',
+        })
+
+        @!component('studio/_components/input', {
+        name: 'fax',
+        type: 'tel',
+        label: 'Nomor Fax',
+        required: false,
+        placeholder: '(021) xxxxxxx',
+        })
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        @!component('studio/_components/input', {
+        name: 'url',
+        label: 'Website OPD',
+        required: false,
+        attributes: 'placeholder="https://"',
+        })
+
+        <div class="form-group">
+          <label for="logo" class="form-label">
+            Ikon
+            <small>(1:1)</small>
+          </label>
+          <div class="form-control-wrap">
+            <input type="file" name="logo" id="logo" class="dropify" data-allowed-file-extensions="png jpg jpeg gif webp PNG JPG JPEG GIF WEBP" data-max-file-size-preview="2M">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="form-label">
+            Jenis OPD
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <select name="type" id="type" class="form-control js-select2" data-placeholder="Pilih Jenis" required="">
+              <option value="">-- Pilih Jenis --</option>
+              @each (key in Object.keys(GovTypeDesc))
+              @if (key !== 0)
+              <option value="{{ key }}">{{ GovTypeDesc[key] }}</option>
+              @end
+              @end
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 d-flex justify-content-end order-3 hide">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </div>
+</form>
+@end

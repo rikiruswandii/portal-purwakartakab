@@ -1,0 +1,3 @@
+<div class="form-group mb-0 {{ inline ? 'd-inline-block' : '' }}">
+  <button type="{{ type || 'submit' }}" {{{ name ? 'name="' + name + '"' : '' }}} {{{ value ? 'value="' + value + '"' : '' }}} class="btn btn-md btn-{{ type || 'primary' }}">{{{ label }}}</button>
+</div>

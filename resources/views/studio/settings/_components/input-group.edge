@@ -1,0 +1,27 @@
+<div class="row g-3 align-center">
+  <div class="col-lg-5">
+    <div class="form-group">
+      <label class="form-label" for="{{ name }}">
+        {{{ label }}}
+        @if (required)
+        <span class="text-danger">*</span>
+        @end
+      </label>
+      <span class="form-note">{{{ note }}}</span>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="form-group">
+      <div class="form-control-wrap">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">{{{ prefix }}}</span>
+          </div>
+
+          <input type="text" class="form-control" id="{{ name }}" name="{{ name }}" value="{{ value }}" {{{ required ? 'required=""' : '' }}} spellcheck="false">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

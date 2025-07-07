@@ -1,0 +1,16 @@
+@set('span', {
+7: '7 Hari',
+15: '15 Hari',
+30: '30 Hari',
+})
+
+<div class="drodown">
+  <a href="#" class="dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white" data-bs-toggle="dropdown">{{span[interval || 30]}}</a>
+  <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+    <ul class="link-list-opt no-bdr">
+      @each (time in Object.keys(span))
+      <li><a href="{{ route('studio.overview') }}?s={{time}}"><span>{{span[time]}}</span></a></li>
+      @end
+    </ul>
+  </div>
+</div>

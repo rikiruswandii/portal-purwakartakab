@@ -1,0 +1,80 @@
+@layout('studio/_layouts/master')
+
+@set('dtColumns', {
+  columns: [
+    {
+      data: 'number',
+      orderable: false,
+      searchable: false,
+      rowClass: 'nk-tb-col',
+      rowTemplate: '<span>${window.data.number}</span>',
+    },
+    {
+      data: 'name',
+      rowClass: 'text-wrap',
+      rowTemplate: '<span class="tb-lead text-wrap"><a href="${window.data.url}" target="_blank">${window.data.name}</a></span>',
+    },
+    {
+      data: 'total',
+      rowClass: 'text-wrap',
+      rowTemplate: '<span class="d-none d-md-block">${window.data.total}</span><span class="d-block d-md-none">${window.data.aggregate}</span>',
+    },
+  ]
+})
+
+@section('navigation')
+@!component('studio/_components/tools/add', {
+title: 'Tambah Kategori',
+})
+@end
+
+@section('content')
+<div class="nk-block">
+  <div class="card card-bordered card-stretch">
+    <div class="card-inner">
+      <table class="datatable-init nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false" data-ajax="{{ base_url(route('studio.categories.datatable', { type })) }}" up-data='{{{ JSON.stringify(dtColumns) }}}'>
+        <thead>
+          <tr class="nk-tb-item nk-tb-head">
+            <th class="nk-tb-col" data-column="number">
+              <span class="sub-text">#</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="name">
+              <span class="sub-text">Nama</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="total">
+              <span class="sub-text">Total Artikel</span>
+            </th>
+            <th class="nk-tb-col nk-tb-col-tools text-end" data-column="action" data-features="edit,delete"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@end
+
+@section('modal')
+@component('studio/_components/modal', { title: 'Tambah Kategori' })
+<form action="{{ current_url() }}" method="POST" class="form-validate" data-page="Kategori" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  @!component('studio/_components/input', {
+  name: 'name',
+  label: 'Nama Kategori',
+  required: true,
+  m: 'mb-3',
+  })
+
+  @!component('studio/_components/button', {
+  label: 'Simpan'
+  })
+</form>
+@end
+@end
+
+@section('javascript')
+<script nonce="{{ cspNonce || '' }}" defer="">
+  Object.assign(window.constants, {{{ JSON.stringify(dtColumns) }}})
+</script>
+@end

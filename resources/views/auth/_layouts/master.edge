@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id" class="js">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  @include('studio/_partials/meta')
+  <title>{{ parseTitle(page) }}</title>
+
+  @entryPointStyles('unpoly')
+  @!section('stylesheet')
+  @entryPointStyles('app')
+</head>
+
+<body class="nk-body bg-white npc-general pg-auth" layout-root>
+  @include('studio/_partials/preloader')
+
+  <div class="nk-app-root">
+    <div class="nk-main">
+      <div class="nk-wrap nk-wrap-nosidebar">
+        <div class="nk-content">
+          <div class="nk-split nk-split-page nk-split-md">
+            <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white">
+              <div class="nk-block nk-block-middle nk-auth-body">
+                @include('auth/_partials/brand')
+
+                <div layout-main>
+                  @!section('body')
+                </div>
+              </div>
+
+              @include('auth/_partials/footer')
+            </div>
+
+            <div class="nk-split-content nk-split-stretch bg-abstract"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  @entryPointScripts('unpoly')
+  @!section('javascript')
+  @entryPointScripts('app')
+</body>
+
+</html>

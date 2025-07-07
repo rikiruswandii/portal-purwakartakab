@@ -1,0 +1,173 @@
+@layout('studio/_layouts/master')
+
+@set('dtColumns', {
+  columns: [
+    {
+      data: 'number',
+      orderable: false,
+      searchable: false,
+      rowClass: 'nk-tb-col',
+      rowTemplate: '${window.data.number}',
+    },
+    {
+      data: 'title',
+      rowClass: 'text-wrap',
+      rowTemplate: '<span class="tb-lead">${window.data.title}</span>',
+    },
+    {
+      data: 'date',
+      rowClass: 'text-wrap',
+    },
+    {
+      data: 'start',
+      rowClass: 'text-wrap',
+      rowTemplate: '${window.data.start ? `${window.data.start} - ${window.data.end}` : "-"}',
+    },
+    {
+      data: 'place',
+      rowClass: 'text-wrap',
+      rowTemplate: '${window.data.place || "-"}',
+    },
+    {
+      data: 'source',
+      rowClass: 'tb-col-lg text-wrap',
+    },
+  ]
+})
+
+@section('navigation')
+<div class="d-flex gap-1 h-auto">
+@!component('studio/_components/tools/add-direct', {
+icon: 'reload-alt',
+label: 'Sinkronasi',
+link: base_url(route('studio.events.synchronize')),
+attributes: 'up-cache="false"',
+})
+@!component('studio/_components/tools/add', {
+title: 'Tambah Agenda',
+})
+</div>
+@end
+
+@section('content')
+<div class="nk-block">
+  <div class="card card-bordered card-stretch">
+    <div class="card-inner">
+      <table class="datatable-init nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false" data-ajax="{{ base_url(route('studio.events.datatable')) }}" up-data='{{{ JSON.stringify(dtColumns) }}}'>
+        <thead>
+          <tr class="nk-tb-item nk-tb-head">
+            <th class="nk-tb-col" data-column="number">
+              <span class="sub-text">#</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="title">
+              <span class="sub-text">Judul</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="date">
+              <span class="sub-text">Tanggal</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="start">
+              <span class="sub-text">Waktu</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="place">
+              <span class="sub-text">Tempat</span>
+            </th>
+            <th class="nk-tb-col text-wrap tb-col-lg" data-column="source">
+              <span class="sub-text">Sumber</span>
+            </th>
+            <th class="nk-tb-col nk-tb-col-tools text-end" data-column="action" data-features="edit,delete"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@end
+
+@section('modal')
+@component('studio/_components/modal', { title: 'Tambah Agenda' })
+<form action="{{ current_url() }}" method="POST" class="form-validate row" data-page="Agenda" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  @!component('studio/_components/input', {
+  name: 'title',
+  label: 'Judul',
+  required: true,
+  m: 'mb-3',
+  })
+
+  @!component('studio/_components/input', {
+  name: 'date',
+  label: 'Tanggal Acara',
+  required: true,
+  m: 'mb-3',
+  type: 'date',
+  })
+
+  @!component('studio/_components/input', {
+  name: 'start',
+  label: 'Jam Mulai',
+  required: true,
+  m: 'mb-3',
+  col: 'col-md-6',
+  type: 'time',
+  })
+
+  @!component('studio/_components/input', {
+  name: 'end',
+  label: 'Jam Selesai',
+  required: true,
+  m: 'mb-3',
+  col: 'col-md-6',
+  type: 'time',
+  })
+
+  <div class="form-group mb-3 col-md-6">
+    <label for="category" class="form-label">
+      Kategori
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-control-wrap">
+      <select name="category" id="category" class="form-control js-select2" data-placeholder="Pilih Kategori" data-tags="on" data-search="on" required="">
+        <option value="">-- Pilih Kategori --</option>
+        @each (category in categories)
+        <option value="{{ category }}">{{ category }}</option>
+        @end
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group mb-3 col-md-6">
+    <label for="type" class="form-label">
+      Tipe Acara
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-control-wrap">
+      <select name="type" id="type" class="form-control js-select2" data-placeholder="Pilih Tipe" required="">
+        <option value="">-- Pilih Tipe --</option>
+        @each ((type, value) in types)
+        <option value="{{ value }}">{{ type }}</option>
+        @end
+      </select>
+    </div>
+  </div>
+
+  @!component('studio/_components/input', {
+  name: 'place',
+  label: 'Tempat',
+  required: true,
+  m: 'mb-3',
+  })
+
+  @!component('studio/_components/button', {
+  label: 'Simpan'
+  })
+</form>
+@end
+@end
+
+@section('javascript')
+<script nonce="{{ cspNonce || '' }}" defer="">
+  Object.assign(window.constants, {{{ JSON.stringify(dtColumns) }}})
+</script>
+@end

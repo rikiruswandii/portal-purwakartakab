@@ -1,0 +1,87 @@
+@layout('studio/_layouts/headless')
+
+@section('content')
+<div class="nk-block">
+  <div class="card card-bordered">
+    <div class="card-aside-wrap">
+      <div class="card-inner card-inner-lg" layout-inner>
+        <div class="nk-block-head nk-block-head-lg">
+          <div class="nk-block-between">
+            <div class="nk-block-head-content">
+              <h4 class="nk-block-title">Informasi Personal</h4>
+              <div class="nk-block-des">
+                <p>Info dasar, seperti nama, nomor telepon dan alamat email yang digunakan.</p>
+              </div>
+            </div>
+
+            <div class="nk-block-head-content align-self-start d-lg-none">
+              <a href="javascript:void(0)" class="toggle btn btn-icon btn-trigger mt-n1" data-target="user-aside">
+                <em class="icon ni ni-menu-alt-r"></em>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <form action="{{ current_url() }}" method="POST" class="nk-block form-validate" up-target="[layout-inner]" up-fail-target="[layout-inner]">
+          @include('studio/_partials/alert/success')
+          @include('studio/_partials/alert/danger')
+
+          {{ csrfField() }}
+
+          <div class="row gy-3">
+            <div class="col-md-12">
+              @!component('studio/_components/input', {
+              name: 'username',
+              label: 'Nama Pengguna',
+              value: logged.login,
+              disabled: true,
+              })
+            </div>
+
+            <div class="col-md-12">
+              @!component('studio/_components/input', {
+              name: 'email',
+              label: 'Alamat Surel',
+              type: 'email',
+              value: logged.email,
+              })
+            </div>
+
+            <div class="col-md-12">
+              @!component('studio/_components/input', {
+              name: 'name',
+              label: 'Nama Lengkap',
+              value: logged.name,
+              })
+            </div>
+
+            <div class="col-md-12">
+              @!component('studio/_components/input', {
+              name: 'role',
+              label: 'Peran',
+              value: UserRoleDesc[logged.role],
+              disabled: true,
+              })
+            </div>
+
+            <div class="col-md-12">
+              @!component('studio/_components/input', {
+              name: 'government',
+              label: 'OPD',
+              value: government?.name,
+              disabled: true,
+              })
+            </div>
+
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      @include('studio/_partials/overhaul/profile')
+    </div>
+  </div>
+</div>
+@end

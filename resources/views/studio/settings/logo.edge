@@ -1,0 +1,64 @@
+@layout('studio/_layouts/master')
+
+@section('content')
+<div class="nk-block nk-block-lg">
+  <div class="card">
+    @include('studio/_partials/overhaul/settings')
+
+    <div class="card-inner" layout-inner>
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <h4 class="title nk-block-title">Pengaturan Logo</h4>
+          <p>Atur tampilan logo dan icon website</p>
+
+          @include('studio/_partials/alert/success')
+          @include('studio/_partials/alert/danger')
+
+          <form action="{{ current_url() }}" enctype="multipart/form-data" method="POST" class="gy-3 form-settings form-validate" up-target="[layout-inner]" up-fail-target="[layout-inner]">
+            {{ csrfField() }}
+
+            @!component('studio/settings/_components/dropify', {
+            name: 'light',
+            label: 'Logo Terang',
+            note: 'Akan ditampilkan pada latar yang gelap',
+            value: settings.media.logo.light,
+            allowed: 'png webp PNG WEBP',
+            required: true,
+            custom: 'logo dark',
+            })
+
+            @!component('studio/settings/_components/dropify', {
+            name: 'dark',
+            label: 'Logo Gelap',
+            note: 'Akan ditampilkan pada latar yang terang',
+            value: settings.media.logo.dark,
+            allowed: 'png webp PNG WEBP',
+            required: true,
+            custom: 'logo',
+            })
+
+            @!component('studio/settings/_components/dropify', {
+            name: 'icon',
+            label: 'Ikon',
+            note: 'Ikon yang digunakan website',
+            value: settings.media.icon,
+            allowed: 'png webp PNG WEBP',
+            required: true,
+            custom: 'logo square',
+            })
+
+            <div class="row g-3">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-5">
+                <div class="form-group mt-2">
+                  <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

@@ -1,0 +1,77 @@
+@layout('studio/_layouts/master')
+
+@section('content')
+<div class="nk-block nk-block-lg">
+  <div class="card">
+    @include('studio/_partials/overhaul/settings')
+
+    <div class="card-inner" layout-inner>
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <h4 class="title nk-block-title">Pengaturan Umum</h4>
+          <p>Personalisasi identitas, deskripsi dan pengaturan dasar website</p>
+
+          @include('studio/_partials/alert/success')
+          @include('studio/_partials/alert/danger')
+
+          <form action="{{ current_url() }}" method="POST" class="gy-3 form-settings form-validate" up-target="[layout-inner]" up-fail-target="[layout-inner]">
+            {{ csrfField() }}
+
+            @!component('studio/settings/_components/input', {
+            name: 'name',
+            label: 'Nama',
+            note: 'Dibutuhkan di semua halaman website',
+            value: settings.app.name,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/input', {
+            name: 'title',
+            label: 'Judul',
+            note: 'Hanya digunakan pada halaman utama',
+            value: settings.app.title,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/input', {
+            name: 'tagline',
+            label: 'Tagline',
+            note: 'Tagline/slogan yang diusung daerah',
+            value: settings.app.tagline,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/input', {
+            name: 'holder',
+            label: 'Pengelola',
+            note: 'Pemilik dan pengelola website',
+            value: settings.app.holder,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/textarea', {
+            name: 'description',
+            label: 'Deskripsi Website',
+            note: 'Deskripsi ditampilkan pada hasil pencarian Google',
+            value: settings.app.description,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/textarea', {
+            name: 'keywords',
+            label: 'Kata Kunci',
+            note: 'Kata kunci untuk pencarian Google',
+            value: settings.app.keywords,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/button', {
+            label: 'Simpan'
+            })
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

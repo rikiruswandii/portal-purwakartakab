@@ -1,0 +1,8 @@
+@if (flashMessages.has('failed') || flashMessages.has('success'))
+@set('toastr', {
+  message: flashMessages.get('failed') || flashMessages.get('success'),
+  type: flashMessages.has('failed') ? 'error' : 'success',
+})
+
+<div id="toastr" up-data='{{{ JSON.stringify(toastr) }}}'></div>
+@end

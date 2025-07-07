@@ -1,0 +1,66 @@
+{
+  "typescript": false,
+  "commands": [
+    "./commands",
+    "@adonisjs/core/build/commands/index.js",
+    "@adonisjs/repl/build/commands",
+    "@rocketseat/adonis-bull/build/commands",
+    "@adonisjs/lucid/build/commands",
+    "@adonisjs/mail/build/commands",
+    "@adonisjs/bouncer/build/commands"
+  ],
+  "exceptionHandlerNamespace": "App/Exceptions/Handler",
+  "aliases": {
+    "App": "app",
+    "Config": "config",
+    "Database": "database",
+    "Contracts": "contracts"
+  },
+  "preloads": [
+    "./start/routes",
+    "./start/kernel",
+    "./start/view",
+    "./start/limiter",
+    "./start/bull",
+    "./start/events",
+    "./start/bouncer"
+  ],
+  "providers": [
+    "./providers/AppProvider",
+    "./providers/RestProvider",
+    "./providers/RouteProvider",
+    "@adonisjs/core",
+    "@adonisjs/session",
+    "@adonisjs/view",
+    "@adonisjs/shield",
+    "@rocketseat/adonis-bull",
+    "adonis5-sentry",
+    "@adonisjs/lucid",
+    "@adonisjs/auth",
+    "@adonisjs/mail",
+    "@adonisjs/limiter",
+    "@adonisjs/route-model-binding/build/providers/RmbProvider",
+    "@adonisjs/attachment-lite",
+    "@adonisjs/redis",
+    "adonis-lucid-soft-deletes",
+    "./providers/UnpolyProvider",
+    "@adonisjs/lucid-slugify",
+    "@kaperskyguru/adonis-cache",
+    "@adonisjs/bouncer",
+    "@adonisjs/drive-s3"
+  ],
+  "metaFiles": [
+    {
+      "pattern": "public/**",
+      "reloadServer": false
+    },
+    {
+      "pattern": "resources/views/**/*.edge",
+      "reloadServer": false
+    }
+  ],
+  "aceProviders": [
+    "@adonisjs/repl"
+  ],
+  "lastCompiledAt": "2024-09-30T03:43:14.899Z"
+}

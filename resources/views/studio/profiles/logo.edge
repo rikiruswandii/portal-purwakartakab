@@ -1,0 +1,169 @@
+@layout('studio/_layouts/master')
+
+@section('navigation')
+<a href="javascript:void(0)" class="btn btn-primary d-inline-flex" data-post-target="form#pre-content[method=POST]">
+  <em class="icon ni ni-check"></em>
+  <span>Simpan</span>
+</a>
+@end
+
+@section('content')
+<form id="pre-content" action="{{ base_url(route('studio.pages.logo.pre')) }}" enctype="multipart/form-data"
+  method="POST" class="nk-block form-validate row" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  <div class="col-md-12">
+    <div class="card card-stretch">
+      <div class="card-inner p-0">
+        <div>
+          <div class="quill-basic" data-html-target="[name=pre]">{{{ detail.content.pre }}}</div>
+          <textarea class="form-control hide" name="pre" required="">{{{ detail.content.pre }}}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mt-4">
+    <div class="card card-bordered card-stretch">
+      <table class="table table-tranx">
+        <thead>
+          <tr class="tb-tnx-head">
+            <th class="tb-tnx-id">
+              <span>Makna Logo</span>
+            </th>
+            <th class="tb-tnx-action">
+              <span>&nbsp;</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @each ((section, index) in detail.content.section)
+          <tr class="tb-tnx-item flex-nowrap align-items-center">
+            <td class="tb-tnx-id">
+              <span class="title">{{ section.title }}</span>
+            </td>
+            <td class="tb-tnx-action">
+              <a class="text-soft btn btn-icon btn-trigger edit-button" data-modal-type="logo-section"
+                data-index="{{ index }}" data-title="{{ section.title }}" data-caption="{{ section.caption }}"
+                data-bs-toggle="modal" data-bs-target="#logo-section">
+                <em class="icon ni ni-pen"></em>
+              </a>
+            </td>
+          </tr>
+          @end
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-6 mt-4">
+    <div class="card card-bordered card-stretch">
+      <table class="table table-tranx">
+        <thead>
+          <tr class="tb-tnx-head">
+            <th class="tb-tnx-id">
+              <span>Makna Warna</span>
+            </th>
+            <th class="tb-tnx-action">
+              <span>&nbsp;</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @each ((color, index) in detail.content.color)
+          <tr class="tb-tnx-item flex-nowrap align-items-center">
+            <td class="tb-tnx-id">
+              <div class="d-flex gap-1 align-items-center">
+                <span class="color-preview" style="background-color: {{ color.hex }}"></span>
+                <span class="title">{{ color.name }}</span>
+              </div>
+            </td>
+            <td class="tb-tnx-action">
+              <a class="text-soft btn btn-icon btn-trigger edit-button" data-modal-type="logo-color"
+                data-index="{{ index }}" data-hex="{{ color.hex }}" data-name="{{ color.name }}"
+                data-caption="{{ color.caption }}" data-bs-toggle="modal" data-bs-target="#logo-color">
+                <em class="icon ni ni-pen"></em>
+              </a>
+            </td>
+          </tr>
+          @end
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-12 d-flex justify-content-end hide">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </div>
+</form>
+@end
+
+@section('modal')
+@component('studio/_components/modal', { type: 'logo-section', title: 'Ubah Makna Logo' })
+<form action="{{ base_url(route('studio.pages.logo.section')) }}" enctype="multipart/form-data" method="POST"
+  class="form-validate" data-page="Makna Logo" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+  <input type="hidden" name="index">
+
+  @!component('studio/_components/input', {
+  name: 'title',
+  label: 'Nama',
+  required: true,
+  m: 'mb-3',
+  })
+
+  <div class="form-group mb-3">
+    <label for="caption" class="form-label">
+      Keterangan
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-control-wrap">
+      <textarea name="caption" id="caption" class="form-control" spellcheck="false" style="min-height: 60px"
+        required=""></textarea>
+    </div>
+  </div>
+
+  @!component('studio/_components/button', {
+  label: 'Simpan'
+  })
+</form>
+@end
+
+@component('studio/_components/modal', { type: 'logo-color', title: 'Ubah Makna Warna' })
+<form action="{{ base_url(route('studio.pages.logo.color')) }}" enctype="multipart/form-data" method="POST"
+  class="form-validate" data-page="Makna Warna" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+  <input type="hidden" name="index">
+
+  @!component('studio/_components/input', {
+  type: 'color',
+  name: 'hex',
+  label: 'Warna',
+  required: true,
+  m: 'mb-3',
+  })
+
+  @!component('studio/_components/input', {
+  name: 'name',
+  label: 'Nama',
+  required: true,
+  m: 'mb-3',
+  })
+
+  <div class="form-group mb-3">
+    <label for="caption" class="form-label">
+      Keterangan
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-control-wrap">
+      <textarea name="caption" id="caption" class="form-control" spellcheck="false" style="min-height: 60px;"
+        required=""></textarea>
+    </div>
+  </div>
+
+  @!component('studio/_components/button', {
+  label: 'Simpan'
+  })
+</form>
+@end
+@end

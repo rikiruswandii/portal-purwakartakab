@@ -1,0 +1,158 @@
+@layout('studio/_layouts/master')
+
+@set('dtColumns', {
+  columns: [
+    {
+      data: 'number',
+      orderable: false,
+      searchable: false,
+      rowClass: 'nk-tb-col',
+    },
+    {
+      data: 'name',
+      rowClass: 'text-wrap',
+      rowTemplate: '<div class="user-card"><div class="user-avatar d-none d-sm-flex">${(window.data.name[0] + window.data.name[1]).toUpperCase()}</div><div class="user-info"><span class="tb-lead">${window.data.name}</span><span>${window.data.email}</span></div></div>'
+    },
+    {
+      data: 'login',
+      rowClass: 'text-wrap tb-col-lg',
+    },
+    {
+      data: 'role',
+      rowClass: 'text-wrap tb-col-lg',
+    },
+  ]
+})
+
+@section('navigation')
+@!component('studio/_components/tools/add', {
+title: 'Tambah Pengguna',
+})
+@end
+
+@section('content')
+<div class="nk-block">
+  <div class="card card-bordered card-stretch">
+    <div class="card-inner">
+      <table class="datatable-init nowrap nk-tb-list nk-tb-ulist" data-auto-responsive="false" data-ajax="{{ base_url(route('studio.users.datatable')) }}" up-data='{{{ JSON.stringify(dtColumns) }}}'>
+        <thead>
+          <tr class="nk-tb-item nk-tb-head">
+            <th class="nk-tb-col" data-column="number">
+              <span class="sub-text">#</span>
+            </th>
+            <th class="nk-tb-col text-wrap" data-column="name">
+              <span class="sub-text">Nama</span>
+            </th>
+            <th class="nk-tb-col text-wrap tb-col-lg" data-column="login">
+              <span class="sub-text">Masuk</span>
+            </th>
+            <th class="nk-tb-col text-wrap tb-col-lg" data-column="role">
+              <span class="sub-text">Peran</span>
+            </th>
+            <th class="nk-tb-col nk-tb-col-tools text-end" data-column="action" data-features="edit,delete"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@end
+
+@section('modal')
+@component('studio/_components/modal', { title: 'Tambah Pengguna' })
+<form action="{{ current_url() }}" method="POST" class="form-validate row" data-page="Pengguna" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  @!component('studio/_components/input', {
+  row: true,
+  name: 'login',
+  label: 'Nama Pengguna',
+  required: true,
+  m: 'mb-3',
+  attributes: renderAttr({
+  'data-on-edit': 'disable'
+  }),
+  })
+
+  @!component('studio/_components/input', {
+  row: true,
+  name: 'email',
+  label: 'Alamat Surel',
+  required: true,
+  m: 'mb-3',
+  type: 'email',
+  })
+
+  @!component('studio/_components/input', {
+  row: true,
+  name: 'password',
+  label: 'Kata Sandi',
+  required: true,
+  m: 'mb-3',
+  type: 'password',
+  attributes: renderAttr({
+  'data-on-edit': 'optional',
+  }),
+  })
+
+  @!component('studio/_components/input', {
+  row: true,
+  name: 'name',
+  label: 'Nama Lengkap',
+  required: true,
+  m: 'mb-3',
+  })
+
+  <div class="form-group mb-3">
+    <label class="form-label" for="role">
+      Peran
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-control-wrap">
+      <select name="role" id="role" class="form-control js-select2" data-placeholder="Pilih Peran" required="">
+        <option value="">-- Pilih Peran --</option>
+        @each ((value, key) in UserRoleDesc)
+        @if (key !== 0)
+        <option value="{{ key }}">{{ value }}</option>
+        @end
+        @end
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="government" class="form-label">
+      OPD
+    </label>
+
+    <div class="alert alert-warning">
+      <div class="alert-text">
+        <p>Kolom OPD <strong>wajib diisi</strong> ketika Peran yang dipilih adalah Kontributor atau Pengembang.</p>
+      </div>
+    </div>
+
+    <div class="form-control-wrap">
+      <select name="government" id="government" class="form-control js-select2" data-search="on" data-placeholder="Pilih OPD">
+        <option value="">-- Pilih OPD --</option>
+        @each (government in governments)
+        <option value="{{ government.uuid }}">{{ government.name }}</option>
+        @end
+      </select>
+    </div>
+  </div>
+
+  <div class="mb-0 col-md-12">
+    @!component('studio/_components/button', {
+    label: 'Simpan'
+    })
+  </div>
+</form>
+@end
+@end
+
+@section('javascript')
+<script nonce="{{ cspNonce || '' }}" defer="">
+  Object.assign(window.constants, {{{ JSON.stringify(dtColumns) }}})
+</script>
+@end

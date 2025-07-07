@@ -1,0 +1,38 @@
+@layout('auth/_layouts/master')
+
+@section('body')
+<div class="nk-block-head">
+  <div class="nk-block-head-content">
+    <h5 class="nk-block-title">{{ page }}</h5>
+
+    <div class="nk-block-des">
+      <p>Akses panel {{ settings.app.name }} untuk mengelola konten.</p>
+    </div>
+  </div>
+</div>
+
+<form action="{{ current_url() }}" method="POST" class="form-validate">
+  @include('studio/_partials/alert/success')
+  @include('studio/_partials/alert/danger')
+
+  {{ csrfField() }}
+
+  @!component('auth/_components/input', {
+  name: 'uid',
+  label: 'Nama Pengguna / Alamat Surel',
+  placeholder: 'Masukkan nama pengguna / alamat surel kamu',
+  autofocus: true,
+  })
+
+  @!component('auth/_components/password', {
+  name: 'password',
+  label: 'Kata Sandi',
+  placeholder: 'Masukkan kata sandi kamu',
+  login: true,
+  })
+
+  @!component('auth/_components/button', {
+  label: 'Masuk'
+  })
+</form>
+@end

@@ -1,0 +1,89 @@
+@layout('studio/_layouts/master')
+
+@section('content')
+<div class="nk-block">
+  <div class="row g-gs">
+    <div class="col-lg-4">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Token Dibuat</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{tokens}}</span>
+              <span class="sub-title">
+                <span class="change down text-danger me-0">{{expired}}</span>
+                token kedaluwarsa.
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-info-soft text-info">
+                <em class="icon ni ni-hash"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Permintaan API</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{requests}}</span>
+              <span class="sub-title">
+                Total bulan ini.
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-warning-soft text-warning">
+                <em class="icon ni ni-calendar-alt"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card card-bordered h-100">
+        <div class="card-inner">
+          <div class="card-title-group align-start mb-2">
+            <div class="card-title">
+              <h6 class="title">Endpoint Terjangkau</h6>
+            </div>
+          </div>
+
+          <div class="align-center flex-sm-wrap g-4 flex-md-nowrap justify-content-between">
+            <div class="nk-sale-data">
+              <span class="amount">{{endpoint}}</span>
+              <span class="sub-title">
+                Total bulan ini.
+              </span>
+            </div>
+
+            <div class="nk-sales-ck flex-ungrow d-none d-md-block d-lg-none d-xl-block">
+              <div class="icon-shape icon-lg rounded-3 bg-success-soft text-success">
+                <em class="icon ni ni-meter"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

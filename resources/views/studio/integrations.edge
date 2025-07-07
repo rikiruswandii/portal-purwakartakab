@@ -1,0 +1,146 @@
+@layout('studio/_layouts/master')
+
+@section('content')
+<div class="app-block">
+  <div class="row g-gs">
+    <div class="col-lg-4">
+      <div class="card card-bordered text-center">
+        <div class="pricing-body">
+          <div class="pricing-media">
+            <em class="icon ni ni-server" style="font-size: 90px"></em>
+          </div>
+
+          <div class="pricing-title w-220px mx-auto">
+            <h5 class="title">Postman Collection</h5>
+            <span class="sub-text">
+              Coba koleksi postman yang sudah disediakan oleh pengembang website ini.
+            </span>
+          </div>
+
+          <div class="pricing-action mt-0">
+            <a href="{{ postman }}" target="_blank" class="btn btn-primary">Coba Sekarang</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-token">
+          Buat Baru
+        </button>
+      </div>
+
+      @include('studio/_partials/alert/success')
+      @include('studio/_partials/alert/danger')
+
+      @if (flashMessages.get('token'))
+      <div class="code-block mb-3">
+        <h6 class="overline-title title">Token</h6>
+
+        <div class="alert alert-warning alert-icon">
+          <em class="icon ni ni-alert-circle"></em>
+          Harap salin dan simpan baik-baik token ini, karena setelah halaman disegarkan ini akan menghilang.
+        </div>
+
+        <pre class="prettyprint" id="token">{{ flashMessages.get('token') || 'Error' }}</pre>
+      </div>
+      @end
+
+      <div class="card card-bordered">
+        <table class="table table-ulogs">
+          <thead class="table-light">
+            <tr>
+              <th class="tb-col-info">
+                <span class="overline-title">Label</span>
+              </th>
+              <th class="tb-col-time">
+                <span class="overline-title">Dibuat</span>
+              </th>
+              <th class="tb-col-time">
+                <span class="overline-title">Kedaluwarsa</span>
+              </th>
+              <th class="tb-col-action">
+                <span class="overline-title">&nbsp;</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (tokens.length > 0)
+            @each (token in tokens)
+            <tr>
+              <td class="tb-col-info">
+                {{ token.name }}
+              </td>
+              <td class="tb-col-time">
+                {{ parse_date(token.createdAt, false) }}
+              </td>
+              <td class="tb-col-time">
+                {{ token.expiresAt ? parse_date(token.expiresAt, false) : 'Tidak Ada' }}
+              </td>
+              <td class="tb-col-action">
+                <a href="javascript:void(0)" data-name="{{ token.name }} Token" data-action="{{ base_url(route('studio.integrations.revoke', [token.uuid])) }}" class="link-cross me-sm-n1 delete-button">
+                  <em class="icon ni ni-cross"></em>
+                </a>
+              </td>
+            </tr>
+            @end
+            @else
+            <tr>
+              <td class="text-center" colspan="3">
+                Tidak ada data apapun disini.
+              </td>
+            </tr>
+            @end
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+@end
+
+@section('modal')
+<div class="modal fade" id="create-token" data-bs-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Buat Token</h5>
+        <a href="javascript:void(0)" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+
+      <div class="modal-body">
+        <form action="{{ base_url(request.url()) }}" method="POST" class="form-validate is-alter"
+          up-target="[layout-main]" up-fail-target="[layout-main]">
+          {{ csrfField() }}
+
+          <div class="form-group">
+            <label class="form-label" for="label">
+              Label
+              <span class="text-danger">*</span>
+            </label>
+            <div class="form-control-wrap">
+              <input type="text" class="form-control" name="label" id="label" required="">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="expired">
+              Kedaluwarsa
+            </label>
+            <div class="form-control-wrap">
+              <input type="date" class="form-control" name="expired" id="expired">
+            </div>
+          </div>
+
+          <div class="form-group d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Buat</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+@end

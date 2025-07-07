@@ -1,0 +1,12 @@
+<div class="form-group {{ m || '' }} {{ col || '' }}">
+  <label class="form-label" for="{{ name }}">
+    {{{ label }}}
+    @if (required)
+    <span class="text-danger">*</span>
+    @end
+  </label>
+
+  <div class="form-control-wrap">
+    <input type="{{ type || 'text' }}" class="form-control {{ className || '' }}" id="{{ name }}" name="{{ name }}" {{{ value ? `value="${value || ''}"` : '' }}} {{{ required ? 'required=""' : '' }}} {{{ attributes || '' }}} {{{ placeholder ? `placeholder="${placeholder || ''}"` : '' }}} {{{ disabled ? 'disabled=""' : '' }}} {{{ type === 'text' ? 'spellcheck="false"' : '' }}}>
+  </div>
+</div>

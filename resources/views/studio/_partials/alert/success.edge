@@ -1,0 +1,6 @@
+@if (flashMessages.has('success'))
+<div class="alert alert-fill alert-primary alert-dismissible">
+  {{ flashMessages.get('success') }}
+  <button class="close" data-bs-dismiss="alert"></button>
+</div>
+@end

@@ -1,0 +1,126 @@
+@layout('studio/_layouts/master')
+
+@section('navigation')
+<a href="javascript:void(0)" class="btn btn-primary d-inline-flex" data-post-target="form#vision[method=POST]">
+  <em class="icon ni ni-check"></em>
+  <span>Simpan</span>
+</a>
+@end
+
+@section('content')
+<form id="vision" action="{{ base_url(route('studio.pages.goals.vision')) }}" enctype="multipart/form-data"
+  method="POST" class="nk-block form-validate row" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  <div class="col-md-6">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        @!component('studio/_components/input', {
+        name: 'title',
+        label: 'Visi',
+        required: true,
+        m: 'mb-3',
+        value: detail.content.vision.title,
+        })
+
+        <div class="form-group">
+          <label for="subtitle" class="form-label">
+            Keterangan
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <textarea name="subtitle" id="subtitle" class="form-control" spellcheck="false" style="min-height: 90px;" required="">{{ detail.content.vision.subtitle }}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card card-bordered card-stretch">
+      <table class="table table-tranx">
+        <thead>
+          <tr class="tb-tnx-head">
+            <th class="tb-tnx-id">
+              <span>Misi</span>
+            </th>
+            <th class="tb-tnx-action">
+              <span>&nbsp;</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @each ((mission, index) in detail.content.mission)
+          <tr class="tb-tnx-item flex-nowrap align-items-center">
+            <td class="tb-tnx-id">
+              <span class="title">{{ mission.title }}</span>
+            </td>
+            <td class="tb-tnx-action">
+              <div class="dropdown">
+                <a class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown">
+                  <em class="icon ni ni-more-h"></em>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <ul class="link-list-opt no-bdr">
+                    <li>
+                      <a href="javascript:void(0)" class="edit-button" data-modal-type="form-modal" data-uuid="{{ index }}" data-index="{{ index }}" data-title="{{ mission.title }}" data-subtitle="{{ mission.subtitle }}" data-bs-toggle="modal" data-bs-target="#form-modal">
+                        <em class="icon ni ni-pen"></em>
+                        <span>Ubah</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" data-uuid="{{ index }}" data-name="{{ mission.title }}" data-action="delete">
+                        <i class="icon ni ni-trash"></i>
+                        <span>Hapus</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+          @end
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-end mt-2">
+      <button type="button" class="btn btn-sm btn-primary add-button" data-modal-type="form-modal" data-bs-toggle="modal" data-bs-target="#form-modal">Tambah</button>
+    </div>
+  </div>
+
+  <div class="col-md-12 d-flex justify-content-end hide">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </div>
+</form>
+@end
+
+@section('modal')
+@component('studio/_components/modal', { title: 'Tambah Misi' })
+<form action="{{ base_url(route('studio.pages.goals.mission')) }}" enctype="multipart/form-data" method="POST" class="form-validate" data-page="Misi" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+  <input type="hidden" name="index">
+
+  @!component('studio/_components/input', {
+  name: 'title',
+  label: 'Misi',
+  required: true,
+  m: 'mb-3',
+  })
+
+  <div class="form-group mb-3">
+    <label for="subtitle" class="form-label">
+      Keterangan
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-control-wrap">
+      <textarea name="subtitle" id="subtitle" class="form-control" spellcheck="false" style="min-height: 90px" required=""></textarea>
+    </div>
+  </div>
+
+  @!component('studio/_components/button', {
+  label: 'Simpan'
+  })
+</form>
+@end
+@end

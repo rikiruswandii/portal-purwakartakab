@@ -1,0 +1,104 @@
+@layout('studio/_layouts/master')
+
+@section('content')
+<div class="nk-block nk-block-lg">
+  <div class="card">
+    @include('studio/_partials/overhaul/settings')
+
+    <div class="card-inner" layout-inner>
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <h4 class="title nk-block-title">Pengaturan Kontak</h4>
+          <p>Kelola informasi kontak dan pranala media sosial website</p>
+
+          @include('studio/_partials/alert/success')
+          @include('studio/_partials/alert/danger')
+
+          <form action="{{ current_url() }}" method="POST" class="gy-3 form-settings form-validate" up-target="[layout-inner]" up-fail-target="[layout-inner]">
+            {{ csrfField() }}
+
+            @!component('studio/settings/_components/input', {
+            name: 'email',
+            label: 'Alamat Surel',
+            note: 'Alamat surat elektronik',
+            type: 'email',
+            value: settings.contact.email,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/input', {
+            name: 'phone',
+            label: 'Nomor Telepon',
+            note: 'Nomor telepon kantor',
+            type: 'tel',
+            value: settings.contact.phone,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/input', {
+            name: 'fax',
+            label: 'Nomor Fax',
+            note: 'Nomor fax kantor',
+            type: 'tel',
+            value: settings.contact.fax,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/textarea', {
+            name: 'address',
+            label: 'Alamat',
+            note: 'Alamat lengkap kantor',
+            value: settings.contact.address,
+            required: true,
+            })
+
+            @!component('studio/settings/_components/input-group', {
+            name: 'facebook',
+            label: 'Facebook',
+            note: 'Nama pengguna akun Facebook',
+            prefix: 'https://www.facebook.com/',
+            value: settings.social.facebook.replace('https://www.facebook.com/', '')
+            })
+
+            @!component('studio/settings/_components/input-group', {
+            name: 'twitter',
+            label: 'Twitter',
+            note: 'Nama pengguna akun Twitter',
+            prefix: 'https://www.twitter.com/',
+            value: settings.social.twitter.replace('https://www.twitter.com/', '')
+            })
+
+            @!component('studio/settings/_components/input-group', {
+            name: 'youtube',
+            label: 'YouTube',
+            note: 'Nama pengguna akun YouTube',
+            prefix: 'https://www.youtube.com/',
+            value: settings.social.youtube.replace('https://www.youtube.com/', '')
+            })
+
+            @!component('studio/settings/_components/input-group', {
+            name: 'instagram',
+            label: 'Instagram',
+            note: 'Nama pengguna akun Instagram',
+            prefix: 'https://www.instagram.com/',
+            value: settings.social.instagram.replace('https://www.instagram.com/', '')
+            })
+
+            @!component('studio/settings/_components/input-group', {
+            name: 'tiktok',
+            label: 'TikTok',
+            note: 'Nama pengguna akun TikTok',
+            prefix: 'https://www.tiktok.com/',
+            value: settings.social.tiktok.replace('https://www.tiktok.com/', '')
+            })
+
+            @!component('studio/settings/_components/button', {
+            label: 'Simpan'
+            })
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

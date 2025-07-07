@@ -1,0 +1,1 @@
+{"version":3,"file":"TooManyRequests.js","sourceRoot":"","sources":["../../../app/Exceptions/TooManyRequests.ts"],"names":[],"mappings":";;AAAA,2CAA2C;AAE3C,MAAqB,wBAAyB,SAAQ,iBAAS;IAC7D,YAAY,UAAkB,EAAE;QAC9B,KAAK,CAAC,OAAO,EAAE,GAAG,EAAE,mBAAmB,CAAC,CAAA;IAC1C,CAAC;CACF;AAJD,2CAIC"}

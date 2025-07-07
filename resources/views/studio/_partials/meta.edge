@@ -1,0 +1,33 @@
+<base href="{{ base_url() }}">
+<meta name="description" content="{{ settings.app.description }}">
+<meta name="keywords" content="{{ settings.app.keywords }}">
+<meta name="subject" content="{{ settings.app.category }}">
+<meta name="copyright" content="{{ settings.app.holder }}">
+<meta name="language" content="id-ID">
+<meta content="noindex, nofollow" name="robots">
+<meta content="{{ settings.app.category }}" name="Classification">
+<meta content="{{ settings.app.holder }}" name="owner">
+<link href="{{ request?.completeUrl() || '' }}" rel="canonical" title="{{ settings.app.holder }}">
+<meta content="id_ID" property="og:locale">
+<meta content="{{ settings.app.holder }}" property="og:site_name">
+<meta content="website" property="og:type">
+<meta content="{{ settings.app.holder }}" property="og:title">
+<meta content="{{ settings.app.description }}" property="og:description">
+<meta content="{{ request?.completeUrl() || '' }}" property="og:url">
+<meta content="{{ settings.app.holder }}" name="twitter:title">
+<meta content="{{ settings.app.description }}" name="twitter:description">
+<meta content="{{ settings.app.category }}" name="category">
+<meta content="Worldwide" name="coverage">
+<meta content="Global" name="distribution">
+<meta content="General" name="rating">
+<meta content="7 days" name="revisit-after">
+<meta content="0" http-equiv="Expires">
+<meta content="{{ settings.app.holder }}" http-equiv="Copyright">
+<meta content="no" http-equiv="imagetoolbar">
+<meta content="all" name="webcrawlers">
+<meta content="general" name="rating">
+<meta content="all" name="spiders">
+<meta content="{{ settings.app.holder }}" itemprop="name">
+<meta content="{{ settings.app.description }}" itemprop="description">
+
+@include('studio/_partials/favicon')

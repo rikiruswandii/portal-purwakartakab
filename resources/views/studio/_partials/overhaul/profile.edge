@@ -1,0 +1,54 @@
+<div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg" data-toggle-body="true" data-content="user-aside" data-toggle-screen="lg" data-toggle-overlay="true">
+  <div class="card-inner-group" data-simplebar>
+    <div class="card-inner">
+      <div class="user-card">
+        <div class="user-avatar bg-primary">
+          {{{ avatar(logged) }}}
+        </div>
+
+        <div class="user-info">
+          <span class="lead-text">{{ logged.name }}</span>
+          <span class="sub-text">{{ logged.email }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-inner p-0">
+      <ul class="link-list-menu">
+        <li>
+          <a href="{{ base_url(route('studio.profile.show')) }}" up-target="[layout-inner]">
+            <em class="icon ni ni-user-fill-c"></em>
+            <span>Informasi Personal</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{{ base_url(route('studio.password.show')) }}" up-target="[layout-inner]">
+            <em class="icon ni ni-lock-alt-fill"></em>
+            <span>Ubah Kata Sandi</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="javascript:void(0)">
+            <em class="icon ni ni-activity-round-fill"></em>
+            <span>Aktifitas Akun</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-inner">
+      <div class="user-account-info py-0">
+        <h6 class="overline-title-alt">Akun Dibuat</h6>
+        <p>{{ parse_date(logged.createdAt, false) || '127.0.0.1' }}</p>
+
+        <h6 class="overline-title-alt">Terakhir Masuk</h6>
+        <p>{{ parse_date(latest?.createdAt || DateTime.local()) }}</p>
+
+        <h6 class="overline-title-alt">Alamat IP</h6>
+        <p>{{ latest?.ipAddress || '127.0.0.1' }}</p>
+      </div>
+    </div>
+  </div>
+</div>

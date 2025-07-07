@@ -1,0 +1,127 @@
+@layout('studio/_layouts/master')
+
+@section('navigation')
+<a href="javascript:void(0)" class="btn btn-primary d-inline-flex" data-post-target="form[method=POST]">
+  <em class="icon ni ni-check"></em>
+  <span>Simpan</span>
+</a>
+@end
+
+@section('content')
+<form action="{{ current_url() }}" enctype="multipart/form-data" method="POST" class="nk-block row gy-3 form-validate" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+
+  <div class="col-md-4">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        <div class="card-title-group align-start gx-3 mb-3">
+          <div class="card-title">
+            <h6 class="title">Bupati</h6>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="chief" class="form-label">
+            Nama Lengkap
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" id="chief" name="chief" spellcheck="no" value="{{ old('chief') }}" required="">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="chief_photo" class="form-label">
+            Foto
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <input type="file" name="chief_photo" id="chief_photo" class="dropify" data-allowed-file-extensions="png jpg jpeg gif webp PNG JPG JPEG GIF WEBP" data-max-file-size-preview="2M">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        <div class="card-title-group align-start gx-3 mb-3">
+          <div class="card-title">
+            <h6 class="title">Wakil Bupati</h6>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="deputy" class="form-label">
+            Nama Lengkap
+          </label>
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" id="deputy" name="deputy" spellcheck="no" value="{{ old('deputy') }}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="deputy_photo" class="form-label">
+            Foto
+          </label>
+          <div class="form-control-wrap">
+            <input type="file" name="deputy_photo" id="deputy_photo" class="dropify" data-allowed-file-extensions="png jpg jpeg gif webp PNG JPG JPEG GIF WEBP" data-max-file-size-preview="2M">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        <div class="form-group">
+          <label for="start" class="form-label">
+            Awal Periode
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <input type="number" min="1000" max="{{ DateInstance.getFullYear() + 10 }}" class="form-control" name="start" id="start" placeholder="{{ DateInstance.getFullYear() }}" value="{{ old('start') }}" required="">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="end" class="form-label">
+            Akhir Periode
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <input type="number" min="1000" max="{{ DateInstance.getFullYear() + 10 }}" class="form-control" name="end" id="end" placeholder="{{ DateInstance.getFullYear() + 5 }}" value="{{ old('end') }}" required="">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description" class="form-label">
+            Catatan
+          </label>
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" name="description" id="description" placeholder="Ini akan mengganti tahun periode" value="{{ old('description') }}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="active">
+            Status
+          </label>
+          <div class="form-control-wrap">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" name="active" id="active" value="true">
+              <label class="custom-control-label prevent-select" for="active">Aktif/Nonaktif</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 d-flex justify-content-end hide">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </div>
+</form>
+@end

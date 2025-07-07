@@ -1,0 +1,88 @@
+@layout('studio/_layouts/master')
+
+@section('navigation')
+<a href="javascript:void(0)" class="btn btn-primary d-inline-flex" data-post-target="form[method=POST]">
+  <em class="icon ni ni-check"></em>
+  <span>Simpan</span>
+</a>
+@end
+
+@section('content')
+<form action="{{ current_url() }}" enctype="multipart/form-data" method="POST" class="nk-block row gy-3 form-validate" up-target="[layout-main]" up-fail-target="[layout-main]">
+  {{ csrfField() }}
+  <input type="hidden" name="back" value="{{ current_url() }}">
+
+  <div class="col-md-8 order-2 order-md-1">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        <div class="form-group">
+          <label for="title" class="form-label">
+            Judul Artikel
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" id="title" name="title" spellcheck="false" value="{{ old('title') }}" required="">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="content" class="form-label">
+            Konten
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap" quill>
+            <div class="quill-basic" data-html-target="[name=content]">{{{ old('content') }}}</div>
+            <textarea class="form-control hide" name="content" required="">{{{ old('content') }}}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 order-1 order-md-2">
+    <div class="card card-bordered card-stretch">
+      <div class="card-inner">
+        <div class="form-group">
+          <label for="category" class="form-label">
+            Kategori
+            <span class="text-danger">*</span>
+          </label>
+          <div class="form-control-wrap">
+            <select name="category" id="category" class="form-select js-select2" data-search="on" data-placeholder="Pilih Kategori" required="">
+              <option value="">-- Pilih Kategori --</option>
+              @each (category in categories)
+              <option value="{{ category.uuid }}" {{{ old('category') === category.uuid ? 'selected=""' : '' }}}>{{ category.name }}</option>
+              @end
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="thumbnail" class="form-label">
+            Thumbnail
+          </label>
+          <div class="form-control-wrap">
+            <input type="file" name="thumbnail" id="thumbnail" class="dropify" data-allowed-file-extensions="png jpg jpeg gif webp PNG JPG JPEG GIF WEBP" data-max-file-size-preview="2M">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="active">
+            Status
+          </label>
+          <div class="form-control-wrap">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" name="active" id="active" value="true">
+              <label class="custom-control-label prevent-select" for="active">Aktif/Nonaktif</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 d-flex justify-content-end order-3 hide">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </div>
+</form>
+@end

@@ -1,0 +1,17 @@
+<div class="modal fade zoom" id="{{ type || 'form-modal' }}" data-bs-backdrop="static">
+  <div class="modal-dialog {{ size || '' }}" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{{ title || '' }}}</h5>
+
+        <a href="javascript:void(0)" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <em class="icon ni ni-cross"></em>
+        </a>
+      </div>
+
+      <div class="modal-body {{ body || '' }}">
+        {{{ await $slots.main() }}}
+      </div>
+    </div>
+  </div>
+</div>
