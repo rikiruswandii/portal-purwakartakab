@@ -121,7 +121,7 @@ class NewsController {
         const slug = ctx.request.param('slug');
         const category = await Categories_1.default.query()
             .whereNull('deleted_at')
-            .where('slug', `news-${slug}`)
+            .where('slug', slug)
             .where('type', 'news')
             .first();
         if (!category) {

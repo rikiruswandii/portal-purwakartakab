@@ -9,7 +9,7 @@ class Pariwisata {
     constructor() {
         this.axios = Helpers_1.default.axios({
             baseURL: 'https://portal.pariwisata.purwakartakab.go.id/api',
-            params: { key: Env_1.default.get('PST_PARIWISATA') },
+            params: { key: 'developerganteng' },
         });
     }
     async wisata() {
